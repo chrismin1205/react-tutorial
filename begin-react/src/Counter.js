@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+
+// state에는 문자, 숫자, 함수 뭐든 쓸 수 있음
+// action은 type에 따라 다른 상태 반환하도록
+function reducer(state, action) {
+  switch (action.type){
+    case 'INCREAMENT':
+      return state + 1;
+    case 'DECREAMENT':
+      return state - 1;
+    default:
+      throw new Error('Unhandled action');
+  }
+}
 
 function Counter(){
-  // number 라는 상태를 만들 것인데,
-  // 기본값을 0으로 하겠다는 것
-  // setNumber는 기존값을 변경하는 값
-  const [number, setNumber] = useState(0);
 
+  const [number, dispatch] = useReducer(reducer, 0);
   const onIncrease = () => {
-    setNumber(prevNumber => prevNumber + 1);
+    // setNumber(prevNumber => prevNumber + 1);
+    dispatch({
+      type: 'INCREAMENT'
+    });
   }
   const onDecrease = () => {
-    setNumber(number - 1);
+    // setNumber(number - 1);
+    dispatch({
+      type: 'DECREAMENT'
+    });
   }
   return (
     <div>
